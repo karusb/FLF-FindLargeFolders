@@ -15,6 +15,7 @@ namespace FindLargestFolders
     public partial class Form1 : Form
     {
         Dictionary<DirectoryInfo, DirectoryItemUI> directoryUI = new Dictionary<DirectoryInfo, DirectoryItemUI>();
+        
         public Form1()
         {
             InitializeComponent();
@@ -54,7 +55,17 @@ namespace FindLargestFolders
 
         private void UiComponent_ScanClickEvent(DirectoryInfo dir)
         {
-            var dirs = dir.GetDirectories();
+            DirectoryInfo[] dirs;
+            try
+            {
+                dirs = dir.GetDirectories();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, e.Source,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var dirSize = Utilities.FormatBytes(Utilities.GetDirSize(dir));
             directoryUI[dir].SetDirSize(dirSize);
         }
@@ -64,8 +75,17 @@ namespace FindLargestFolders
             int numberofDirsToShow = (int)numericUpDown1.Value;
             Dictionary<long, DirectoryInfo> dirSizeMap = new Dictionary<long, DirectoryInfo>();
             List<long> dirSizes = new List<long>();
-
-            var dirs = dir.GetDirectories();
+            DirectoryInfo[] dirs;
+            try
+            {
+                dirs = dir.GetDirectories();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, e.Source,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             foreach (var ldir in dirs)
             {
                 long dirSize = Utilities.GetDirSize(ldir);
@@ -80,6 +100,7 @@ namespace FindLargestFolders
             }
             dirSizes.Sort();
             if (dirSizes.Count < numberofDirsToShow) numberofDirsToShow = dirSizes.Count;
+            flowLayoutPanel1.SuspendLayout();
             for(int i= dirSizes.Count -1; i > (dirSizes.Count - numberofDirsToShow-1);--i)
             {
                 var ldir = dirSizeMap[dirSizes[i]];
@@ -90,6 +111,23 @@ namespace FindLargestFolders
                 directoryUI.Add(ldir, uiComponent);
                 directoryUI[dir].AddLayout(uiComponent);
             }
+            flowLayoutPanel1.ResumeLayout();
+        }
+
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            const int HEADERHEIGHT = 28;
+            const int XPADDING = 43;
+            const int YPADDING = 90;
+            System.Drawing.Size padding = new Size();
+            padding.Width = XPADDING;
+            padding.Height = YPADDING;
+            flowLayoutPanel1.Size = this.Size - padding;
         }
     }
 }
