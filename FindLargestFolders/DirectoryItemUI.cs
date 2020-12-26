@@ -16,6 +16,7 @@ namespace FindLargestFolders
         public delegate void ExtendClickedEventDelegate(DirectoryInfo dir);
         public event ExtendClickedEventDelegate ExtendedClickEvent;
         public event ExtendClickedEventDelegate ScanClickEvent;
+        public event ExtendClickedEventDelegate RemoveClickEvent;
         public DirectoryInfo Dir;
         private bool isExtended = false;
         public DirectoryItemUI(DirectoryInfo directory,string size,bool isParent)
@@ -57,6 +58,11 @@ namespace FindLargestFolders
         public void RemoveLayout(DirectoryItemUI ui)
         {
             belowFlow.Controls.Remove(ui);
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            RemoveClickEvent?.Invoke(Dir);
         }
     }
 }

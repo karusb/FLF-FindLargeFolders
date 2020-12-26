@@ -33,12 +33,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.belowFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.deleteButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(57, 22);
+            this.label1.Location = new System.Drawing.Point(63, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 0;
@@ -57,7 +58,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(434, 22);
+            this.label2.Location = new System.Drawing.Point(399, 22);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 2;
@@ -83,6 +84,16 @@
             this.belowFlow.Size = new System.Drawing.Size(477, 0);
             this.belowFlow.TabIndex = 4;
             // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(468, 13);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(32, 31);
+            this.deleteButton.TabIndex = 5;
+            this.deleteButton.Text = "Del";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            // 
             // DirectoryItemUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -90,6 +101,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.SteelBlue;
+            this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.belowFlow);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
@@ -97,7 +109,7 @@
             this.Controls.Add(this.label1);
             this.MaximumSize = new System.Drawing.Size(884, 10000);
             this.Name = "DirectoryItemUI";
-            this.Size = new System.Drawing.Size(503, 47);
+            this.Size = new System.Drawing.Size(700, 47);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,5 +122,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.FlowLayoutPanel belowFlow;
+        private System.Windows.Forms.Button deleteButton;
     }
 }
