@@ -47,8 +47,10 @@ namespace FindLargestFolders
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            ClearMaps();
             var givenPath = new DirectoryInfo(comboBox1.Text);
             flowLayoutPanel1.Controls.Clear();
+            flowLayoutPanel1.SuspendLayout();
             foreach (var dir in givenPath.GetDirectories())
             {
                 if (avoidedFolderNames.Contains(dir.Name))continue;
@@ -56,7 +58,7 @@ namespace FindLargestFolders
                 directoryUI.Add(dir.FullName, uiComponent);
                 flowLayoutPanel1.Controls.Add(uiComponent);
             }
-
+            flowLayoutPanel1.ResumeLayout();
         }
 
         private void UiComponent_ScanClickEvent(DirectoryInfo dir)
@@ -69,6 +71,12 @@ namespace FindLargestFolders
         {
             var tempdirs = Utilities.GetDirectoriesFromDirectoryInfoWithMessageBox(dir);
             if (tempdirs == null) return;
+            if(CheckIfWorkerIsRunning())
+            {
+                MessageBox.Show("Please wait for the process to finish", "Busy",
+    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (!CheckFoldersPrepared(dir,true))
 
             {
@@ -81,7 +89,9 @@ namespace FindLargestFolders
             }
             else
             {
+                flowLayoutPanel1.SuspendLayout();
                 DrawFoldersForFolder(dir, false);
+                flowLayoutPanel1.ResumeLayout();
             }
 
         }
@@ -108,7 +118,10 @@ namespace FindLargestFolders
         {
 
         }
-
+        private bool CheckIfWorkerIsRunning()
+        {
+            return backgroundWorker3.IsBusy;
+        }
         private void AddDirectoriesToDirectoryUI(DirectoryInfo parentDir,Tuple<Dictionary<long, DirectoryInfo>, List<long>> sizeMapandSizeList,int numberofDirsToShow)
         {
             var dirSizeMap = sizeMapandSizeList.Item1;
@@ -190,10 +203,15 @@ namespace FindLargestFolders
                 adminToolTipActive = true;
             }
         }
-
+        private void ClearMaps()
+        {
+            directoryUI.Clear();
+            childSizeMap.Clear();
+            parentSizeMap.Clear();
+        }
         private void scanAllButton_Click(object sender, EventArgs e)
         {
-            
+            ClearMaps();
             var givenPath = new DirectoryInfo(comboBox1.Text);
             var subdirs = Utilities.GetDirectoriesFromDirectoryInfo(givenPath);
             flowLayoutPanel1.Controls.Clear();
@@ -268,7 +286,9 @@ namespace FindLargestFolders
             progressUI.SetItemName("......");
             if(drawAtEnd)
             {
+                flowLayoutPanel1.SuspendLayout();
                 DrawFoldersForFolder(result[0], false);
+                flowLayoutPanel1.ResumeLayout();
             }
         }
         private DirectoryItemUI MakeDirectoryItemUi(DirectoryInfo dir, string size, bool parent)

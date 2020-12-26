@@ -31,7 +31,7 @@ namespace FindLargestFolders
         {
             label2.Text = size;
         }
-        private void Button1_Click(object sender, EventArgs e)
+        private void ExtendEvent()
         {
             if (isExtended)
             {
@@ -45,6 +45,10 @@ namespace FindLargestFolders
                 ExtendedClickEvent?.Invoke(Dir);
                 isExtended = true;
             }
+        }
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            ExtendEvent();
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -63,6 +67,16 @@ namespace FindLargestFolders
         private void deleteButton_Click(object sender, EventArgs e)
         {
             RemoveClickEvent?.Invoke(Dir);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void label1_DoubleClick(object sender, EventArgs e)
+        {
+            ExtendEvent();
         }
     }
 }
