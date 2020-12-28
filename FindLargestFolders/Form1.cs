@@ -131,31 +131,7 @@ namespace FindLargestFolders
                 try
                 {
                     Directory.Delete(dir.FullName, true);
-                    var relui = FindRelevantUi(dir.FullName);
-                    if (!directoryUI.ContainsKey(dir.Parent.FullName))
-                    {
-                        if (flowLayoutPanel1.Controls.Contains(relui))
-                        {
-                            flowLayoutPanel1.Controls.Remove(relui);
-                        }
-                    }
-                    else if (directoryUI.ContainsKey(dir.FullName))
-                    {
-
-                        if(flowLayoutPanel1.Controls.Contains(directoryUI[dir.Parent.FullName]))
-                        {
-                            directoryUI[dir.Parent.FullName].RemoveLayout(relui);
-                        }
-                        directoryUI.Remove(dir.FullName);
-                    }
-                    if(parentSizeMap.ContainsKey(dir.Parent.FullName))
-                    {
-                        parentSizeMap.Remove(dir.Parent.FullName);
-                    }
-                    if(childSizeMap.ContainsKey(dir.Parent.FullName))
-                    {
-                        childSizeMap.Remove(dir.Parent.FullName);
-                    }
+                    RemoveItemFromUI(dir);
                 }
                 catch (Exception ex)
                 {
@@ -168,10 +144,7 @@ namespace FindLargestFolders
         private void UiComponent_InvestigateClickEvent(DirectoryInfo dir)
         {
             progressUI.SetProgress(0);
-
-            //var investigatedItemUi = directoryUI[dir.FullName];
             ClearMaps();
-            //directoryUI.Add(dir.FullName,investigatedItemUi);
             backgroundWorker1.RunWorkerAsync(CreateMagicBGWData(dir));
         }
 
@@ -191,6 +164,34 @@ namespace FindLargestFolders
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
 
+        }
+        private void RemoveItemFromUI(DirectoryInfo dir)
+        {
+            var relui = FindRelevantUi(dir.FullName);
+            if (!directoryUI.ContainsKey(dir.Parent.FullName))
+            {
+                if (flowLayoutPanel1.Controls.Contains(relui))
+                {
+                    flowLayoutPanel1.Controls.Remove(relui);
+                }
+            }
+            else if (directoryUI.ContainsKey(dir.FullName))
+            {
+
+                if (flowLayoutPanel1.Controls.Contains(directoryUI[dir.Parent.FullName]))
+                {
+                    directoryUI[dir.Parent.FullName].RemoveLayout(relui);
+                }
+                directoryUI.Remove(dir.FullName);
+            }
+            if (parentSizeMap.ContainsKey(dir.Parent.FullName))
+            {
+                parentSizeMap.Remove(dir.Parent.FullName);
+            }
+            if (childSizeMap.ContainsKey(dir.Parent.FullName))
+            {
+                childSizeMap.Remove(dir.Parent.FullName);
+            }
         }
         private bool CheckIfWorkerIsRunning()
         {
@@ -215,6 +216,12 @@ namespace FindLargestFolders
             }
             return null;
         }
+        private void AddDirectoryToDirectoryUI(Tuple<string, long> pathAndSize, bool isParent, bool isEnabled)
+        {
+            var uiComponent = MakeDirectoryItemUi(Utilities.GetDirectoryInfoFromPath(pathAndSize.Item1), Utilities.FormatBytes(pathAndSize.Item2), true);
+            uiComponent.Enabled = isEnabled;
+            if (!directoryUI.ContainsKey(pathAndSize.Item1)) directoryUI.Add(pathAndSize.Item1, uiComponent);
+        }
         private void AddChildDirectoriesToDirectoryUI(string parentDirPath, List<Tuple<string,long>> sizeMapandSizeList, int numberofDirsToShow)
         {
             if (sizeMapandSizeList.Count < numberofDirsToShow) numberofDirsToShow = sizeMapandSizeList.Count;
@@ -222,16 +229,15 @@ namespace FindLargestFolders
             childSizeMap.Add(parentDirPath, new Tuple<string, long>[numberofDirsToShow]);
             for(int i = 0; i < numberofDirsToShow; ++i)
             {
-                var uiComponent = MakeDirectoryItemUi(Utilities.GetDirectoryInfoFromPath(sizeMapandSizeList[i].Item1), Utilities.FormatBytes(sizeMapandSizeList[i].Item2), false);
-                directoryUI.Add(sizeMapandSizeList[i].Item1, uiComponent);
+                AddDirectoryToDirectoryUI(sizeMapandSizeList[i], false, true);
                 childSizeMap[parentDirPath][i] = sizeMapandSizeList[i];
             }
         }
         private void AddParentDirectoryToDirectoryUI(Tuple<string,long> pathAndSize, bool isEnabled)
         {
-            var uiComponent = MakeDirectoryItemUi(Utilities.GetDirectoryInfoFromPath(pathAndSize.Item1), Utilities.FormatBytes(pathAndSize.Item2), true);
-            if(!directoryUI.ContainsKey(pathAndSize.Item1))directoryUI.Add(pathAndSize.Item1, uiComponent);
+            AddDirectoryToDirectoryUI(pathAndSize, true, isEnabled);
         }
+
         private void PrepareFoldersForFolder(DirectoryInfo dir , bool recursive,bool showMsgbox)
         {
             if (avoidedFolderNames.Contains(dir.Name)) return;
@@ -277,7 +283,7 @@ namespace FindLargestFolders
             foreach (var dir in subdirs)
             {
                 if (avoidedFolderNames.Contains(dir.Name)) continue;
-                DrawFolder(dir, "0", isEnabled);
+                DrawFolder(new Tuple<string, long>(dir.FullName,0), isEnabled);
             }
             flowLayoutPanel1.ResumeLayout();
         }
@@ -288,27 +294,16 @@ namespace FindLargestFolders
             flowLayoutPanel1.SuspendLayout();
             foreach (var dirpair in pathSizeList)
             {
-                DrawFolder(dirpair.Item1, Utilities.FormatBytes(dirpair.Item2), isEnabled);
+                DrawFolder(dirpair, isEnabled);
             }
             flowLayoutPanel1.ResumeLayout();
         }
-        private void DrawFolder(string path,string size,bool isEnabled)
+        private void DrawFolder(Tuple<string, long> pathandSize, bool isEnabled)
         {
-            var dir = Utilities.GetDirectoryInfoFromPath(path);
+            var dir = Utilities.GetDirectoryInfoFromPath(pathandSize.Item1);
             if (avoidedFolderNames.Contains(dir.Name)) return;
-            var uiComponent = MakeDirectoryItemUi(dir, size, true);
-            uiComponent.Enabled = isEnabled;
-            if (!directoryUI.ContainsKey(dir.FullName)) directoryUI.Add(dir.FullName, uiComponent);
-            flowLayoutPanel1.Controls.Add(uiComponent);
-        }
-        private void DrawFolderFromDirectoryUI(string fullpath)
-        {
-            flowLayoutPanel1.Controls.Add(directoryUI[fullpath]);
-        }
-        private void DrawFolder(DirectoryInfo dir, string size, bool isEnabled)
-        {
-            if (avoidedFolderNames.Contains(dir.Name)) return;
-            var uiComponent = MakeDirectoryItemUi(dir, size, true);
+            //AddDirectoryToDirectoryUI(pathandSize, true, isEnabled);
+            var uiComponent = MakeDirectoryItemUi(dir, Utilities.FormatBytes(pathandSize.Item2), true);
             uiComponent.Enabled = isEnabled;
             if (!directoryUI.ContainsKey(dir.FullName)) directoryUI.Add(dir.FullName, uiComponent);
             flowLayoutPanel1.Controls.Add(uiComponent);
