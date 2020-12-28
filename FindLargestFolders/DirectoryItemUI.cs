@@ -40,7 +40,7 @@ namespace FindLargestFolders
             if (isExtended)
             {
                 button1.BackgroundImage = FindLargestFolders.Properties.Resources.icons8_plus_math_26;
-                label1.BackColor = Color.SteelBlue;
+                label1.BackColor = Color.DeepSkyBlue;
                 isExtended = false;
             }
             else
@@ -55,7 +55,7 @@ namespace FindLargestFolders
             if (isExtended)
             {
                 button1.BackgroundImage = FindLargestFolders.Properties.Resources.icons8_plus_math_26;
-                label1.BackColor = Color.SteelBlue;
+                label1.BackColor = Color.DeepSkyBlue;
                 belowFlow.Controls.Clear();
                 isExtended = false;
             }

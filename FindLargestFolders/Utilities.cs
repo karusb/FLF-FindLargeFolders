@@ -128,25 +128,6 @@ namespace FindLargestFolders
             }
             return dirs;
         }
-        public static Tuple<Dictionary<long, DirectoryInfo>, List<long>> CreateDirSizeMap(DirectoryInfo[] dirs)
-        {
-            Dictionary<long, DirectoryInfo> dirSizeMap = new Dictionary<long, DirectoryInfo>();
-            List<long> dirSizes = new List<long>();
-            foreach (var ldir in dirs)
-            {
-                long dirSize = Utilities.GetDirSize(ldir);
-                if (dirSize > 0)
-                {
-                    if (!dirSizeMap.ContainsKey(dirSize))
-                    {
-                        dirSizeMap.Add(dirSize, ldir);
-                        dirSizes.Add(dirSize);
-                    }
-                }
-            }
-            dirSizes.Sort();
-            return new Tuple<Dictionary<long, DirectoryInfo>, List<long>>(dirSizeMap, dirSizes);
-        }
         public static List<Tuple<string, long>> CreateSizeMap(string path)
         {
             var depth2 = GetDirectoriesFromPath(path);
