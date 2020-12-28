@@ -15,35 +15,57 @@ namespace FindLargestFolders
     {
         public delegate void ExtendClickedEventDelegate(DirectoryInfo dir);
         public event ExtendClickedEventDelegate ExtendedClickEvent;
+        public event ExtendClickedEventDelegate InvestigateClickEvent;
         public event ExtendClickedEventDelegate ScanClickEvent;
         public event ExtendClickedEventDelegate RemoveClickEvent;
         public DirectoryInfo Dir;
         private bool isExtended = false;
-        public DirectoryItemUI(DirectoryInfo directory,string size,bool isParent)
+        public bool isParent;
+        public DirectoryItemUI(DirectoryInfo directory,string size,bool parent)
         {
             Dir = directory;
             InitializeComponent();
             label1.Text = directory.FullName;
             label2.Text = size;
+            button1.BackgroundImage = FindLargestFolders.Properties.Resources.icons8_plus_math_26;
+            isParent = parent;
             if (!isParent) button2.Visible = false;
         }
         public void SetDirSize(string size)
         {
             label2.Text = size;
         }
+        public void RevertExtendEventUi()
+        {
+            if (isExtended)
+            {
+                button1.BackgroundImage = FindLargestFolders.Properties.Resources.icons8_plus_math_26;
+                label1.BackColor = Color.SteelBlue;
+                isExtended = false;
+            }
+            else
+            {
+                button1.BackgroundImage = FindLargestFolders.Properties.Resources.icons8_minus_24;
+                label1.BackColor = Color.CadetBlue;
+                isExtended = true;
+            }
+        }
         private void ExtendEvent()
         {
             if (isExtended)
             {
-                button1.Text = "+";
+                button1.BackgroundImage = FindLargestFolders.Properties.Resources.icons8_plus_math_26;
+                label1.BackColor = Color.SteelBlue;
                 belowFlow.Controls.Clear();
                 isExtended = false;
             }
             else
             {
-                button1.Text = "-";
-                ExtendedClickEvent?.Invoke(Dir);
+                button1.BackgroundImage = FindLargestFolders.Properties.Resources.icons8_minus_24;
+                label1.BackColor = Color.CadetBlue;
                 isExtended = true;
+                ExtendedClickEvent?.Invoke(Dir);
+
             }
         }
         private void Button1_Click(object sender, EventArgs e)
@@ -77,6 +99,11 @@ namespace FindLargestFolders
         private void label1_DoubleClick(object sender, EventArgs e)
         {
             ExtendEvent();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            InvestigateClickEvent?.Invoke(Dir);
         }
     }
 }

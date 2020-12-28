@@ -7,7 +7,7 @@
     <ProjectGuid>{343451B4-1181-4804-A69D-EA9D3AB74596}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>FindLargestFolders</RootNamespace>
-    <AssemblyName>FindLargestFolders</AssemblyName>
+    <AssemblyName>BazWare FLF - Find Large Folders</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -66,6 +66,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>flfico_Lrk_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>FindLargestFolders.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -149,6 +155,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="flf.jpg" />
+    <Content Include="flfico_Lrk_icon.ico" />
+    <None Include="Resources\icons8-refresh-48.png" />
+    <None Include="Resources\icons8-minus-24.png" />
+    <None Include="Resources\icons8-search-property-50.png" />
+    <None Include="Resources\icons8-plus-math-26.png" />
+    <None Include="Resources\icons8-close-window-24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

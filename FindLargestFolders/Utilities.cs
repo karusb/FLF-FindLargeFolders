@@ -66,6 +66,10 @@ namespace FindLargestFolders
         {
             return (currentNumber * 100) / (maxNumber);
         }
+        public static long GetPercentage(long currentNumber, long maxNumber)
+        {
+            return currentNumber * 100L / maxNumber;
+        }
         public static bool isRunAsAdmin()
         {
             bool isElevated;
@@ -142,6 +146,56 @@ namespace FindLargestFolders
             }
             dirSizes.Sort();
             return new Tuple<Dictionary<long, DirectoryInfo>, List<long>>(dirSizeMap, dirSizes);
+        }
+        public static List<Tuple<string, long>> CreateSizeMap(string path)
+        {
+            var depth2 = GetDirectoriesFromPath(path);
+            List<Tuple<string, long>> sizeList = new List<Tuple<string, long>>();
+            for (int j = 0; j < depth2.Length; ++j)
+            {
+                sizeList.Add(new Tuple<string, long>(depth2[j].FullName, Utilities.GetDirSize(depth2[j])));
+            }
+            sizeList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
+            sizeList.Reverse();
+            return sizeList;
+        }
+        public static List<Tuple<string, long>> GetFoldersMatchingSizePercentage(long folderSize,int matchPercentage, List<Tuple<string,long>> sizeMap)
+        {
+            List<Tuple<string,long>> ret = new List<Tuple<string,long>>();
+            foreach (var folder in sizeMap)
+            {
+                if (Utilities.GetPercentage(folder.Item2, folderSize) >= matchPercentage)
+                {
+                    ret.Add(folder);
+                }
+            }
+            return ret;
+        }
+        public static Tuple<string,long> RecursiveDirectoryCulpritFinder(string folderName,long folderSize,int folderDepth,int folderMatchPercentage)
+        {
+            var parentFolder = folderName;
+            var parentFolderSize = folderSize;
+            bool hasMatchingFolders = false;
+            var searchDepth = 0;
+            do
+            {
+                var matchSizeList = Utilities.CreateSizeMap(parentFolder);
+                var matchFolders = Utilities.GetFoldersMatchingSizePercentage(parentFolderSize, folderMatchPercentage, matchSizeList);
+                if (matchFolders.Count != 0)
+                {
+                    searchDepth++;
+                    parentFolder = matchFolders[0].Item1;
+                    parentFolderSize = matchFolders[0].Item2;
+                    hasMatchingFolders = true;
+                }
+                else
+                {
+                    hasMatchingFolders = false;
+                }
+            }
+            while (hasMatchingFolders && searchDepth < folderDepth);
+            if (parentFolder == folderName) return null;
+            return new Tuple<string, long>(parentFolder, parentFolderSize);
         }
     }
 }

@@ -38,10 +38,12 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.scanAllButton = new System.Windows.Forms.Button();
+            this.progressUI = new FindLargestFolders.Progress();
             this.adminLabel = new System.Windows.Forms.Label();
             this.adminLabelTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
-            this.progressUI = new FindLargestFolders.Progress();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.investigationButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.flowLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -125,6 +127,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.investigationButton);
             this.panel1.Controls.Add(this.scanAllButton);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.button1);
@@ -145,6 +148,13 @@
             this.scanAllButton.Text = "Scan All";
             this.scanAllButton.UseVisualStyleBackColor = true;
             this.scanAllButton.Click += new System.EventHandler(this.scanAllButton_Click);
+            // 
+            // progressUI
+            // 
+            this.progressUI.Location = new System.Drawing.Point(488, 3);
+            this.progressUI.Name = "progressUI";
+            this.progressUI.Size = new System.Drawing.Size(346, 48);
+            this.progressUI.TabIndex = 8;
             // 
             // adminLabel
             // 
@@ -171,12 +181,22 @@
             this.backgroundWorker3.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BackgroundWorker_ProgressChanged);
             this.backgroundWorker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
-            // progressUI
+            // backgroundWorker1
             // 
-            this.progressUI.Location = new System.Drawing.Point(488, 3);
-            this.progressUI.Name = "progressUI";
-            this.progressUI.Size = new System.Drawing.Size(346, 48);
-            this.progressUI.TabIndex = 8;
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
+            // investigationButton
+            // 
+            this.investigationButton.Location = new System.Drawing.Point(201, 29);
+            this.investigationButton.Name = "investigationButton";
+            this.investigationButton.Size = new System.Drawing.Size(136, 23);
+            this.investigationButton.TabIndex = 8;
+            this.investigationButton.Text = "Automatic Investigation";
+            this.investigationButton.UseVisualStyleBackColor = true;
+            this.investigationButton.Click += new System.EventHandler(this.investigationButton_Click);
             // 
             // Form1
             // 
@@ -212,6 +232,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button scanAllButton;
         private System.ComponentModel.BackgroundWorker backgroundWorker3;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button investigationButton;
     }
 }
 
