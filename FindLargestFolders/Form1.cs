@@ -270,7 +270,7 @@ namespace FindLargestFolders
         {
             var dirs = (showMsgbox ? Utilities.GetDirectoriesFromDirectoryInfoWithMessageBox(dir) : Utilities.GetDirectoriesFromDirectoryInfo(dir));
             if (dirs == null) return false;
-            if (childSizeMap.ContainsKey(dir.FullName)) return true;
+            if (childSizeMap.ContainsKey(dir.FullName) || parentSizeMap.ContainsKey(dir.FullName)) return true;
             return false;
         }
         private void DrawParentFolders(string path, bool isEnabled)
