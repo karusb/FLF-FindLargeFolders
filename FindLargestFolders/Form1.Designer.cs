@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -37,13 +38,13 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.investigationButton = new System.Windows.Forms.Button();
             this.scanAllButton = new System.Windows.Forms.Button();
-            this.progressUI = new FindLargestFolders.Progress();
             this.adminLabel = new System.Windows.Forms.Label();
             this.adminLabelTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.investigationButton = new System.Windows.Forms.Button();
+            this.progressUI = new FindLargestFolders.Progress();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.flowLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -139,6 +140,16 @@
             this.panel1.Size = new System.Drawing.Size(479, 55);
             this.panel1.TabIndex = 10;
             // 
+            // investigationButton
+            // 
+            this.investigationButton.Location = new System.Drawing.Point(201, 29);
+            this.investigationButton.Name = "investigationButton";
+            this.investigationButton.Size = new System.Drawing.Size(136, 23);
+            this.investigationButton.TabIndex = 8;
+            this.investigationButton.Text = "Automatic Investigation";
+            this.investigationButton.UseVisualStyleBackColor = true;
+            this.investigationButton.Click += new System.EventHandler(this.investigationButton_Click);
+            // 
             // scanAllButton
             // 
             this.scanAllButton.Location = new System.Drawing.Point(340, 29);
@@ -148,13 +159,6 @@
             this.scanAllButton.Text = "Scan All";
             this.scanAllButton.UseVisualStyleBackColor = true;
             this.scanAllButton.Click += new System.EventHandler(this.scanAllButton_Click);
-            // 
-            // progressUI
-            // 
-            this.progressUI.Location = new System.Drawing.Point(488, 3);
-            this.progressUI.Name = "progressUI";
-            this.progressUI.Size = new System.Drawing.Size(346, 48);
-            this.progressUI.TabIndex = 8;
             // 
             // adminLabel
             // 
@@ -188,15 +192,12 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
-            // investigationButton
+            // progressUI
             // 
-            this.investigationButton.Location = new System.Drawing.Point(201, 29);
-            this.investigationButton.Name = "investigationButton";
-            this.investigationButton.Size = new System.Drawing.Size(136, 23);
-            this.investigationButton.TabIndex = 8;
-            this.investigationButton.Text = "Automatic Investigation";
-            this.investigationButton.UseVisualStyleBackColor = true;
-            this.investigationButton.Click += new System.EventHandler(this.investigationButton_Click);
+            this.progressUI.Location = new System.Drawing.Point(488, 3);
+            this.progressUI.Name = "progressUI";
+            this.progressUI.Size = new System.Drawing.Size(346, 48);
+            this.progressUI.TabIndex = 8;
             // 
             // Form1
             // 
@@ -205,6 +206,7 @@
             this.ClientSize = new System.Drawing.Size(911, 450);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "BazWare FLF - Find Large Folders";
             this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
