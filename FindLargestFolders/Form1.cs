@@ -396,6 +396,7 @@ namespace FindLargestFolders
             List<Tuple<string, long>> sizeList = new List<Tuple<string, long>>();
             for (int i = 0; i < subdirs.Length; ++i)
             {
+                if (avoidedFolderNames.Contains(subdirs[i].Name)) continue;
                 var dirSizeLong = Utilities.GetDirSize(subdirs[i]);
                 sizeList.Add(new Tuple<string,long>(subdirs[i].FullName, dirSizeLong));
                 lastWorkingItem = subdirs[i];
@@ -406,6 +407,7 @@ namespace FindLargestFolders
             List<Tuple<string, long>> culpritList = new List<Tuple<string, long>>();
             for(int i=0; i < numberOfFoldersToFocus && i < sizeList.Count;++i)
             {
+                if (sizeList[i].Item2 == 0) continue;
                 lastWorkingItem = Utilities.GetDirectoryInfoFromPath(sizeList[i].Item1);
                 backgroundWorker1.ReportProgress(Utilities.GetPercentage(i + 1, subdirs.Length) + 100);
                 var culprit = Utilities.RecursiveDirectoryCulpritFinder(sizeList[i].Item1, sizeList[i].Item2, datain.FolderDepth, datain.SubFolderSizeMatchPercentage);

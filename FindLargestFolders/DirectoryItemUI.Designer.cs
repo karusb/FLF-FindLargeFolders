@@ -77,7 +77,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(96, 13);
+            this.panel1.Location = new System.Drawing.Point(96, 7);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(322, 31);
             this.panel1.TabIndex = 6;
@@ -86,16 +86,17 @@
             // 
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.button2);
-            this.panel2.Location = new System.Drawing.Point(424, 13);
+            this.panel2.Location = new System.Drawing.Point(424, 7);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(97, 31);
             this.panel2.TabIndex = 7;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(3, 13);
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button1.Location = new System.Drawing.Point(3, 7);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(25, 30);
+            this.button1.Size = new System.Drawing.Size(25, 31);
             this.button1.TabIndex = 1;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
@@ -106,9 +107,9 @@
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button3.ForeColor = System.Drawing.Color.Red;
-            this.button3.Location = new System.Drawing.Point(65, 13);
+            this.button3.Location = new System.Drawing.Point(65, 7);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(25, 30);
+            this.button3.Size = new System.Drawing.Size(25, 31);
             this.button3.TabIndex = 8;
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -128,12 +129,12 @@
             // deleteButton
             // 
             this.deleteButton.BackgroundImage = global::FindLargestFolders.Properties.Resources.icons8_close_window_24;
-            this.deleteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.deleteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.deleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.deleteButton.ForeColor = System.Drawing.Color.Red;
-            this.deleteButton.Location = new System.Drawing.Point(34, 13);
+            this.deleteButton.Location = new System.Drawing.Point(34, 7);
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(25, 30);
+            this.deleteButton.Size = new System.Drawing.Size(25, 31);
             this.deleteButton.TabIndex = 5;
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
