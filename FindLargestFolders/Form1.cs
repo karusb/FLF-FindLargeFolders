@@ -17,6 +17,9 @@ namespace FindLargestFolders
 
     public partial class Form1 : Form
     {
+/*TODO: Cop kutusu = delete icon 
+        
+    */
         Dictionary<string, DirectoryItemUI> directoryUI = new Dictionary<string, DirectoryItemUI>();
         Dictionary<string, string> parentSizeMap = new Dictionary<string, string>();
         Dictionary<string, Tuple<string, long>[]> childSizeMap = new Dictionary<string, Tuple<string, long>[]>();
@@ -447,7 +450,10 @@ namespace FindLargestFolders
                 progressUI.SetOperationName("Preparing large folders...");
                 progressUI.SetProgress(e.ProgressPercentage - 200);
                 progressUI.SetItemName(lastWorkingItem.Name);
-                directoryUI[lastWorkingItem.FullName].Enabled = true;
+                if (directoryUI.ContainsKey(lastWorkingItem.FullName))
+                {
+                    directoryUI[lastWorkingItem.FullName].Enabled = true;
+                }
             }
         }
 

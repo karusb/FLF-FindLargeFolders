@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("BazWare FLF - Find Large Folders")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Find Large Folders")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BazWare")]
 [assembly: AssemblyProduct("BazWare FLF - Find Large Folders")]

@@ -137,7 +137,6 @@ namespace FindLargestFolders
                 sizeList.Add(new Tuple<string, long>(depth2[j].FullName, Utilities.GetDirSize(depth2[j])));
             }
             sizeList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
-            sizeList.Reverse();
             return sizeList;
         }
         public static List<Tuple<string, long>> GetFoldersMatchingSizePercentage(long folderSize,int matchPercentage, List<Tuple<string,long>> sizeMap)
