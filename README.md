@@ -3,8 +3,8 @@ Are you tired of being unable to find what is using up precious hard disk space?
 ![Program](https://github.com/karusb/FLF-FindLargeFolders/blob/master/FindLargestFolders/SS1.png?raw=true)
 
 ## [DOWNLOAD]
- - [Download V2.2 Installer for Windows](https://github.com/karusb/FLF-FindLargeFolders/releases/download/v2.2/BazWareFindLargeFolders-2.2-Installer.zip)
- - [Download V2.2 Portable for Windows](https://github.com/karusb/FLF-FindLargeFolders/releases/download/v2.2/BazWareFindLargeFolders-2.2-Portable.zip)
+ - [Download V2.2 Installer for Windows](https://github.com/karusb/FLF-FindLargeFolders/releases/download/2.2/BazWareFindLargeFolders-2.2-Installer.zip)
+ - [Download V2.2 Portable for Windows](https://github.com/karusb/FLF-FindLargeFolders/releases/download/2.2/BazWareFindLargeFolders-2.2-Portable.zip)
  - Portable Requires Microsoft .NET Framework 4.8
 
 ## [Start]
