@@ -5,6 +5,7 @@ Are you tired of being unable to find what is using up precious hard disk space?
 ## [DOWNLOAD]
  - [Download V2.2 Installer for Windows](https://github.com/karusb/FLF-FindLargeFolders/releases/download/v2.2/BazWareFindLargeFolders-2.2-Installer.zip)
  - [Download V2.2 Portable for Windows](https://github.com/karusb/FLF-FindLargeFolders/releases/download/v2.2/BazWareFindLargeFolders-2.2-Portable.zip)
+ - Portable Requires Microsoft .NET Framework 4.8
 
 ## [Start]
 Select drive and press start to go through directories manually. Click refresh button to calculate folder size, double click to folder name or press "+" button to see sub folders. Deleting a folder is possible by clicking the bin button next to the folder.

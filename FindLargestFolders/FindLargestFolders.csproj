@@ -14,7 +14,7 @@
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\baris\OneDrive\Masaüstü\FLF2.1\</PublishUrl>
+    <PublishUrl>C:\Users\baris\OneDrive\Masaüstü\FLF2.2\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -28,8 +28,8 @@
     <ErrorReportUrl>https://github.com/karusb/FLF-FindLargeFolders</ErrorReportUrl>
     <ProductName>Find Large Folders</ProductName>
     <PublisherName>BazWare</PublisherName>
-    <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>2.0.1.%2a</ApplicationVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>2.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
