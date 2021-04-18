@@ -21,6 +21,7 @@ namespace FindLargestFolders
         public DirectoryInfo Dir;
         private bool isExtended = false;
         public bool isParent;
+        public long DirBytes = 0;
         public DirectoryItemUI(DirectoryInfo directory,string size,bool parent)
         {
             Dir = directory;
@@ -29,18 +30,28 @@ namespace FindLargestFolders
             label2.Text = size;
             button1.BackgroundImage = FindLargestFolders.Properties.Resources.icons8_plus_math_26;
             isParent = parent;
+            fileCountLabel.Text = "0";
+            try
+            {
+                fileCountLabel.Text = directory.GetFiles().Length.ToString();
+            }
+            catch
+            {
+
+            }
             if (!isParent) button2.Visible = false;
         }
-        public void SetDirSize(string size)
+        public void SetDirSize(long size)
         {
-            label2.Text = size;
+            label2.Text = Utilities.FormatBytes(size);
+            DirBytes = size;
         }
         public void RevertExtendEventUi()
         {
             if (isExtended)
             {
                 button1.BackgroundImage = FindLargestFolders.Properties.Resources.icons8_plus_math_26;
-                label1.BackColor = Color.DeepSkyBlue;
+                label1.BackColor = Color.LightSlateGray;
                 isExtended = false;
             }
             else
@@ -55,7 +66,7 @@ namespace FindLargestFolders
             if (isExtended)
             {
                 button1.BackgroundImage = FindLargestFolders.Properties.Resources.icons8_plus_math_26;
-                label1.BackColor = Color.DeepSkyBlue;
+                label1.BackColor = Color.LightSlateGray;
                 belowFlow.Controls.Clear();
                 isExtended = false;
             }
@@ -104,6 +115,11 @@ namespace FindLargestFolders
         private void button3_Click(object sender, EventArgs e)
         {
             InvestigateClickEvent?.Invoke(Dir);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            ScanClickEvent?.Invoke(Dir);
         }
     }
 }

@@ -177,5 +177,23 @@ namespace FindLargestFolders
             if (parentFolder == folderName) return null;
             return new Tuple<string, long>(parentFolder, parentFolderSize);
         }
+        public static void OpenFolderInExplorer(string folderPath)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                {
+                    FileName = folderPath,
+                    UseShellExecute = true,
+                    Verb = "open"
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.Source,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

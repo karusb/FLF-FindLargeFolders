@@ -33,20 +33,25 @@
             this.itemNameLabel = new System.Windows.Forms.Label();
             this.percentageLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileProgressBar
             // 
-            this.fileProgressBar.Location = new System.Drawing.Point(10, 29);
+            this.fileProgressBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.fileProgressBar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.fileProgressBar.Location = new System.Drawing.Point(0, 0);
             this.fileProgressBar.Name = "fileProgressBar";
-            this.fileProgressBar.Size = new System.Drawing.Size(258, 11);
+            this.fileProgressBar.Size = new System.Drawing.Size(327, 17);
             this.fileProgressBar.TabIndex = 0;
             // 
             // operationNameLabel
             // 
             this.operationNameLabel.AutoSize = true;
             this.operationNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.operationNameLabel.ForeColor = System.Drawing.Color.Chocolate;
             this.operationNameLabel.Location = new System.Drawing.Point(3, 0);
             this.operationNameLabel.Name = "operationNameLabel";
             this.operationNameLabel.Size = new System.Drawing.Size(24, 13);
@@ -56,6 +61,7 @@
             // itemNameLabel
             // 
             this.itemNameLabel.AutoSize = true;
+            this.itemNameLabel.ForeColor = System.Drawing.Color.Chocolate;
             this.itemNameLabel.Location = new System.Drawing.Point(185, 0);
             this.itemNameLabel.Name = "itemNameLabel";
             this.itemNameLabel.Size = new System.Drawing.Size(103, 13);
@@ -65,8 +71,10 @@
             // percentageLabel
             // 
             this.percentageLabel.AutoSize = true;
+            this.percentageLabel.Dock = System.Windows.Forms.DockStyle.Right;
             this.percentageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.percentageLabel.Location = new System.Drawing.Point(285, 25);
+            this.percentageLabel.ForeColor = System.Drawing.Color.Chocolate;
+            this.percentageLabel.Location = new System.Drawing.Point(347, 0);
             this.percentageLabel.Name = "percentageLabel";
             this.percentageLabel.Size = new System.Drawing.Size(25, 15);
             this.percentageLabel.TabIndex = 3;
@@ -86,19 +94,28 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(372, 16);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.fileProgressBar);
+            this.panel1.Controls.Add(this.percentageLabel);
+            this.panel1.Location = new System.Drawing.Point(4, 28);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(372, 17);
+            this.panel1.TabIndex = 5;
+            // 
             // Progress
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.fileProgressBar);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.percentageLabel);
             this.Name = "Progress";
             this.Size = new System.Drawing.Size(379, 48);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -109,5 +126,6 @@
         private System.Windows.Forms.Label itemNameLabel;
         private System.Windows.Forms.Label percentageLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel1;
     }
 }
