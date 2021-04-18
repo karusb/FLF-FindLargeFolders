@@ -661,5 +661,51 @@ namespace FindLargestFolders
             sizeList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
             return sizeList;
         }
+
+        private void panel1_DragDrop(object sender, DragEventArgs e)
+        {
+            DragDropEffects effects = DragDropEffects.None;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var path = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+                if (Directory.Exists(path))
+                {
+                    effects = DragDropEffects.Copy;
+                    lastWorkingParentDirectory = Utilities.GetDirectoryInfoFromPath(path);
+                    flowLayoutPanel1.Controls.Clear();
+                    DrawParentFolders(path, true);
+                }
+
+            }
+            e.Effect = effects;
+        }
+
+        private void panel1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Link;
+        }
+
+        private void flowLayoutPanel1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Link;
+        }
+
+        private void flowLayoutPanel1_DragDrop(object sender, DragEventArgs e)
+        {
+            DragDropEffects effects = DragDropEffects.None;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var path = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+                if (Directory.Exists(path))
+                {
+                    effects = DragDropEffects.Copy;
+                    lastWorkingParentDirectory = Utilities.GetDirectoryInfoFromPath(path);
+                    flowLayoutPanel1.Controls.Clear();
+                    DrawParentFolders(path, true);
+                }
+
+            }
+            e.Effect = effects;
+        }
     }
 }

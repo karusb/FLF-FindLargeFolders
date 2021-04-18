@@ -58,6 +58,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.AllowDrop = true;
             this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.comboBox1.ForeColor = System.Drawing.Color.Chocolate;
@@ -70,6 +71,7 @@
             // 
             // label1
             // 
+            this.label1.AllowDrop = true;
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.Chocolate;
             this.label1.Location = new System.Drawing.Point(3, 3);
@@ -80,6 +82,7 @@
             // 
             // button1
             // 
+            this.button1.AllowDrop = true;
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
@@ -94,12 +97,15 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AllowDrop = true;
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.flowLayoutPanel1.Location = new System.Drawing.Point(15, 69);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(884, 369);
             this.flowLayoutPanel1.TabIndex = 4;
+            this.flowLayoutPanel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.flowLayoutPanel1_DragDrop);
+            this.flowLayoutPanel1.DragEnter += new System.Windows.Forms.DragEventHandler(this.flowLayoutPanel1_DragEnter);
             // 
             // label2
             // 
@@ -149,6 +155,7 @@
             // 
             // panel1
             // 
+            this.panel1.AllowDrop = true;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
@@ -159,9 +166,12 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(202, 55);
             this.panel1.TabIndex = 10;
+            this.panel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel1_DragDrop);
+            this.panel1.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel1_DragEnter);
             // 
             // label4
             // 
+            this.label4.AllowDrop = true;
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.Chocolate;
             this.label4.Location = new System.Drawing.Point(4, 38);
@@ -172,6 +182,7 @@
             // 
             // label3
             // 
+            this.label3.AllowDrop = true;
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.Chocolate;
             this.label3.Location = new System.Drawing.Point(26, 20);
@@ -268,6 +279,7 @@
             // 
             // Form1
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -275,6 +287,7 @@
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.adminLabel);
+            this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "BazWare FLF - Find Large Folders";
