@@ -123,6 +123,8 @@
             this.fileCountLabelPanel.Name = "fileCountLabelPanel";
             this.fileCountLabelPanel.Size = new System.Drawing.Size(63, 31);
             this.fileCountLabelPanel.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.fileCountLabelPanel, "Double click to open file in explorer");
+            this.fileCountLabelPanel.Click += new System.EventHandler(this.fileCountLabelPanel_Click);
             // 
             // fileCountLabel
             // 

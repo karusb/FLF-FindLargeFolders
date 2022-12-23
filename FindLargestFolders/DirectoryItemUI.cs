@@ -121,5 +121,10 @@ namespace FindLargestFolders
         {
             ScanClickEvent?.Invoke(Dir);
         }
+
+        private void fileCountLabelPanel_Click(object sender, EventArgs e)
+        {
+            Utilities.OpenFolderInExplorer(label1.Text);
+        }
     }
 }

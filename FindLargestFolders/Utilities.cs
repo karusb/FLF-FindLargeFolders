@@ -151,6 +151,76 @@ namespace FindLargestFolders
             }
             return ret;
         }
+        public static Dictionary<DirectoryInfo,List<FileInfo>> RecursiveLastAccessedFolderFinder(DirectoryInfo parent, int daysOld )
+        {
+            Dictionary<DirectoryInfo, List<FileInfo>> lastAccessed = new Dictionary<DirectoryInfo, List<FileInfo>>();
+            //try
+            //{
+
+            //    if (parent.GetDirectories() == null)
+            //    {
+            //        if (!lastAccessed.ContainsKey(parent))
+            //            lastAccessed.Add(parent, new List<FileInfo>());
+
+            //        var files = parent.GetFiles();
+
+            //        foreach (var file in files)
+            //            if (IsDateTimeGivenDaysOld(file.LastWriteTime, daysOld))
+            //                lastAccessed[parent].Add(file);
+
+            //        return lastAccessed;
+            //    }
+            //}
+            //catch (UnauthorizedAccessException e) { }
+
+            // Bu yanlis bence kanks daha akilli bi secim yapmak lazim
+            try
+            {
+                foreach (var sub in parent.GetDirectories())
+                {
+                    if (IsDateTimeGivenDaysOld(sub.LastAccessTime, daysOld) && IsDateTimeGivenDaysOld(sub.LastWriteTime, daysOld) && IsDateTimeGivenDaysOld(sub.CreationTime, daysOld))
+                        lastAccessed.Add(sub, new List<FileInfo>());
+                    else
+                        lastAccessed = MergeDictionary(RecursiveLastAccessedFolderFinder(sub, daysOld), lastAccessed);
+                }
+            }
+            catch (UnauthorizedAccessException e) { }
+            return lastAccessed;
+        }
+        
+        public static Dictionary<T,K> MergeDictionary<T,K>(Dictionary<T,K> first, Dictionary<T,K> second)
+        {
+            if (first == null && second == null)
+                return new Dictionary<T, K>();
+            if (first == null)
+            {
+                first.ToList().ForEach(x => { if (!second.ContainsKey(x.Key)) second.Add(x.Key, x.Value); });
+                return second;
+            }
+            else
+            {
+                second.ToList().ForEach(x => { if (!first.ContainsKey(x.Key)) first.Add(x.Key, x.Value); });
+                return first;
+            }
+        }
+        public static bool IsDateTimeGivenDaysOld(DateTime time, int days)
+        {
+            return time <= DateTime.Now.AddDays(-days);
+        }
+        public static long TotalFileSize(FileInfo[] files)
+        {
+            long size = 0;
+            foreach (var file in files)
+            {
+                try
+                {
+                    size += file.Length;
+                }
+                catch (UnauthorizedAccessException e)
+                { }
+            }
+            return size;
+        }
         public static Tuple<string,long> RecursiveDirectoryCulpritFinder(string folderName,long folderSize,int folderDepth,int folderMatchPercentage)
         {
             var parentFolder = folderName;

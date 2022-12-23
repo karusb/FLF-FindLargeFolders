@@ -34,10 +34,10 @@ namespace FindLargestFolders
             this.backButton = new System.Windows.Forms.Button();
             this.parentButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.investigateButton = new System.Windows.Forms.Button();
+            this.refreshButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.parentLabel = new System.Windows.Forms.Label();
-            this.refreshButton = new System.Windows.Forms.Button();
-            this.investigateButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.deleteButton = new System.Windows.Forms.Button();
             this.investigateToolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -102,6 +102,34 @@ namespace FindLargestFolders
             this.panel1.Size = new System.Drawing.Size(201, 40);
             this.panel1.TabIndex = 2;
             // 
+            // investigateButton
+            // 
+            this.investigateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.investigateButton.BackgroundImage = global::FindLargestFolders.Properties.Resources.icons8_search_property_50;
+            this.investigateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.investigateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.investigateButton.Location = new System.Drawing.Point(44, 2);
+            this.investigateButton.Name = "investigateButton";
+            this.investigateButton.Size = new System.Drawing.Size(35, 35);
+            this.investigateButton.TabIndex = 3;
+            this.investigateToolTip.SetToolTip(this.investigateButton, "Find Large Folders");
+            this.investigateButton.UseVisualStyleBackColor = false;
+            this.investigateButton.Click += new System.EventHandler(this.investigateButton_Click);
+            // 
+            // refreshButton
+            // 
+            this.refreshButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.refreshButton.BackgroundImage = global::FindLargestFolders.Properties.Resources.icons8_refresh_48;
+            this.refreshButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.refreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.refreshButton.Location = new System.Drawing.Point(3, 2);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(35, 35);
+            this.refreshButton.TabIndex = 2;
+            this.refreshToolTip.SetToolTip(this.refreshButton, "Refresh/Recalculate");
+            this.refreshButton.UseVisualStyleBackColor = false;
+            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
+            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
@@ -127,34 +155,6 @@ namespace FindLargestFolders
             this.parentLabel.Text = "ParentPath";
             this.pathToolTip.SetToolTip(this.parentLabel, "Double click to open file in explorer");
             this.parentLabel.Click += new System.EventHandler(this.parentLabel_Click);
-            // 
-            // refreshButton
-            // 
-            this.refreshButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.refreshButton.BackgroundImage = global::FindLargestFolders.Properties.Resources.icons8_refresh_48;
-            this.refreshButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.refreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.refreshButton.Location = new System.Drawing.Point(3, 2);
-            this.refreshButton.Name = "refreshButton";
-            this.refreshButton.Size = new System.Drawing.Size(35, 35);
-            this.refreshButton.TabIndex = 2;
-            this.refreshToolTip.SetToolTip(this.refreshButton, "Refresh/Recalculate");
-            this.refreshButton.UseVisualStyleBackColor = false;
-            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
-            // 
-            // investigateButton
-            // 
-            this.investigateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.investigateButton.BackgroundImage = global::FindLargestFolders.Properties.Resources.icons8_search_property_50;
-            this.investigateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.investigateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.investigateButton.Location = new System.Drawing.Point(44, 2);
-            this.investigateButton.Name = "investigateButton";
-            this.investigateButton.Size = new System.Drawing.Size(35, 35);
-            this.investigateButton.TabIndex = 3;
-            this.investigateToolTip.SetToolTip(this.investigateButton, "Find Large Folders");
-            this.investigateButton.UseVisualStyleBackColor = false;
-            this.investigateButton.Click += new System.EventHandler(this.investigateButton_Click);
             // 
             // panel3
             // 

@@ -41,15 +41,17 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lastAccessScanButton = new System.Windows.Forms.Button();
             this.investigationButton = new System.Windows.Forms.Button();
             this.scanAllButton = new System.Windows.Forms.Button();
+            this.progressUI = new FindLargestFolders.Progress();
             this.adminLabel = new System.Windows.Forms.Label();
             this.adminLabelTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.maxfolderstooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.progressUI = new FindLargestFolders.Progress();
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.flowLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -111,7 +113,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.Chocolate;
-            this.label2.Location = new System.Drawing.Point(3, 20);
+            this.label2.Location = new System.Drawing.Point(3, 3);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 13);
             this.label2.TabIndex = 5;
@@ -122,7 +124,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(103, 18);
+            this.numericUpDown1.Location = new System.Drawing.Point(103, 3);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             50,
             0,
@@ -194,6 +196,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.panel2.Controls.Add(this.lastAccessScanButton);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.numericUpDown1);
             this.panel2.Controls.Add(this.investigationButton);
@@ -202,6 +205,20 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(277, 55);
             this.panel2.TabIndex = 0;
+            // 
+            // lastAccessScanButton
+            // 
+            this.lastAccessScanButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.lastAccessScanButton.FlatAppearance.BorderSize = 0;
+            this.lastAccessScanButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.lastAccessScanButton.ForeColor = System.Drawing.Color.AliceBlue;
+            this.lastAccessScanButton.Location = new System.Drawing.Point(6, 29);
+            this.lastAccessScanButton.Name = "lastAccessScanButton";
+            this.lastAccessScanButton.Size = new System.Drawing.Size(123, 23);
+            this.lastAccessScanButton.TabIndex = 9;
+            this.lastAccessScanButton.Text = "Last Access Scan";
+            this.lastAccessScanButton.UseVisualStyleBackColor = false;
+            this.lastAccessScanButton.Click += new System.EventHandler(this.lastAccessScanButton_Click);
             // 
             // investigationButton
             // 
@@ -231,6 +248,14 @@
             this.scanAllButton.UseVisualStyleBackColor = false;
             this.scanAllButton.Click += new System.EventHandler(this.scanAllButton_Click);
             // 
+            // progressUI
+            // 
+            this.progressUI.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.progressUI.Location = new System.Drawing.Point(494, 3);
+            this.progressUI.Name = "progressUI";
+            this.progressUI.Size = new System.Drawing.Size(382, 55);
+            this.progressUI.TabIndex = 8;
+            // 
             // adminLabel
             // 
             this.adminLabel.AutoSize = true;
@@ -252,6 +277,7 @@
             // backgroundWorker3
             // 
             this.backgroundWorker3.WorkerReportsProgress = true;
+            this.backgroundWorker3.WorkerSupportsCancellation = true;
             this.backgroundWorker3.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker_DoWork);
             this.backgroundWorker3.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BackgroundWorker_ProgressChanged);
             this.backgroundWorker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
@@ -259,6 +285,7 @@
             // backgroundWorker1
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
@@ -269,13 +296,13 @@
             this.folderBrowserDialog1.SelectedPath = "C:\\";
             this.folderBrowserDialog1.ShowNewFolderButton = false;
             // 
-            // progressUI
+            // backgroundWorker2
             // 
-            this.progressUI.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.progressUI.Location = new System.Drawing.Point(494, 3);
-            this.progressUI.Name = "progressUI";
-            this.progressUI.Size = new System.Drawing.Size(382, 55);
-            this.progressUI.TabIndex = 8;
+            this.backgroundWorker2.WorkerReportsProgress = true;
+            this.backgroundWorker2.WorkerSupportsCancellation = true;
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
+            this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
             // 
             // Form1
             // 
@@ -325,6 +352,8 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ToolTip maxfolderstooltip;
+        private System.Windows.Forms.Button lastAccessScanButton;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
     }
 }
 

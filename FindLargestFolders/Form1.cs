@@ -28,6 +28,8 @@ namespace FindLargestFolders
         ControlBar activeControlBar;
         ControlBar.ControlBarOptions activeControlBarOpts = new ControlBar.ControlBarOptions();
         bool scannedAll = false;
+        long accessOldThresholdInDays = 90;
+
         private class ProgressData
         {
             public string Name;
@@ -85,18 +87,44 @@ namespace FindLargestFolders
         {
             progressUI.SetProgress(0);
             lastWorkingParentDirectory = Utilities.GetDirectoryInfoFromPath(comboBox1.Text);
+            if (backgroundWorker2.IsBusy)
+                backgroundWorker2.CancelAsync();
+            if (backgroundWorker3.IsBusy)
+                backgroundWorker3.CancelAsync();
             backgroundWorker1.RunWorkerAsync(CreateMagicBGWData(Utilities.GetDirectoryInfoFromPath(comboBox1.Text)));
         }
         private void scanAllButton_Click(object sender, EventArgs e)
         {
             scannedAll = true;
+            if (backgroundWorker2.IsBusy)
+                backgroundWorker2.CancelAsync();
+            if (backgroundWorker1.IsBusy)
+                backgroundWorker1.CancelAsync();
             ClearMaps();
             flowLayoutPanel1.Controls.Clear();
             DrawParentFolders(comboBox1.Text, false);
             lastWorkingParentDirectory = Utilities.GetDirectoryInfoFromPath(comboBox1.Text);
             var subdirs = Utilities.GetDirectoriesFromDirectoryInfo(new DirectoryInfo(comboBox1.Text));
             progressUI.SetProgress(0);
+
             backgroundWorker3.RunWorkerAsync(new Tuple<DirectoryInfo[], bool>(subdirs, false));
+        }
+        private void lastAccessScanButton_Click(object sender, EventArgs e)
+        {
+            if (backgroundWorker3.IsBusy)
+                backgroundWorker3.CancelAsync();
+            if (backgroundWorker1.IsBusy)
+                backgroundWorker1.CancelAsync();
+            progressUI.SetProgress(0);
+            TimePicker timePicker = new TimePicker();
+            timePicker.ShowDialog();
+            var res = timePicker.GetResult();
+            if (res.Ok)
+            {
+                accessOldThresholdInDays = res.daysOld;
+                lastWorkingParentDirectory = Utilities.GetDirectoryInfoFromPath(comboBox1.Text);
+                backgroundWorker2.RunWorkerAsync(CreateMagicBGWData(Utilities.GetDirectoryInfoFromPath(comboBox1.Text)));
+            }
         }
         private void UiComponent_ScanClickEvent(DirectoryInfo dir)
         {
@@ -552,7 +580,120 @@ namespace FindLargestFolders
                 flowLayoutPanel1.ResumeLayout();
             }
         }
+        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var datain = (MagicBGWData)(e.Argument);
+            var subdirs = datain.Directories;
+            var folderDepth = datain.FolderDepth;
+            var numberOfFoldersToFocus = datain.NumberOfTotalFoldersToFocus;
+            var subPercentage = datain.SubFolderSizeMatchPercentage;
 
+            var lastAccessedDayThreshold = accessOldThresholdInDays;
+
+
+            if (subdirs == null || subdirs.Length == 0) return;
+            List<Tuple<DirectoryInfo, long>> sizeList = new List<Tuple<DirectoryInfo, long>>();
+            Dictionary<DirectoryInfo, List<FileInfo>> lastAccessed = new Dictionary<DirectoryInfo, List<FileInfo>>();
+            List<DirectoryInfo> flaggedList = new List<DirectoryInfo>();
+
+            for (int i = 0; i < subdirs.Length; ++i)
+            {
+                lastWorkingItem = subdirs[i];
+                backgroundWorker2.ReportProgress(Utilities.GetPercentage(i + 1, subdirs.Length));
+
+                if (avoidedFolderNames.Contains(subdirs[i].Name)) continue;
+                lastAccessed = Utilities.MergeDictionary(Utilities.RecursiveLastAccessedFolderFinder(subdirs[i], (int)lastAccessedDayThreshold), lastAccessed);
+
+            }
+
+            for(int i = 0; i < lastAccessed.Keys.Count; ++i)
+            {
+                lastWorkingItem = lastAccessed.ElementAt(i).Key;
+                backgroundWorker2.ReportProgress(Utilities.GetPercentage(i + 1, lastAccessed.Keys.Count) + 100);
+                if (avoidedFolderNames.Contains(lastWorkingItem.Name)) continue;
+                if (lastAccessed.ContainsKey(lastWorkingItem))
+                {
+                    var lastAccessedFiles = lastAccessed[lastWorkingItem].ToArray();
+                    long dirSize = 0;
+                    if (lastAccessedFiles.Length == 0)
+                    {
+                        if (!flaggedList.Contains(lastWorkingItem))
+                        {
+                            flaggedList.Add(lastWorkingItem);
+                            dirSize = Utilities.GetDirSize(lastWorkingItem);
+                        }
+                    }
+                    else
+                        dirSize = Utilities.TotalFileSize(lastAccessedFiles);
+
+                    sizeList.Add(new Tuple<DirectoryInfo, long>(lastWorkingItem, dirSize));
+                }
+            }
+            sizeList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
+
+            List<Tuple<string, long>> culpritList = new List<Tuple<string, long>>();
+
+            for (int i = 0; i < sizeList.Count && i < numberOfFoldersToFocus; ++i)
+            {
+
+                culpritList.Add(new Tuple<string, long>(sizeList[i].Item1.FullName, sizeList[i].Item2));
+                var culpritDirInf = Utilities.GetDirectoryInfoFromPath(culpritList[i].Item1);
+                lastWorkingItem = culpritDirInf;
+                backgroundWorker2.ReportProgress(Utilities.GetPercentage(i + 1, sizeList.Count) + 200);
+
+                AddParentDirectoryToDirectoryUI(culpritList[i], true);
+                PrepareFoldersForFolder(culpritDirInf, false, false);
+            }
+            datain.CulpritList = culpritList;
+            e.Result = datain;
+        }
+
+        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage <= 100)
+            {
+                progressUI.SetOperationName("Finding Old Files...");
+                progressUI.SetItemName(lastWorkingItem.Name);
+                progressUI.SetProgress(e.ProgressPercentage);
+            }
+            else if (e.ProgressPercentage > 100 && e.ProgressPercentage < 200)
+            {
+                progressUI.SetOperationName("Calculating Sizes...");
+                progressUI.SetProgress(e.ProgressPercentage - 100);
+                progressUI.SetItemName(lastWorkingItem.Name);
+            }
+            else
+            {
+                progressUI.SetOperationName("Preparing folders...");
+                progressUI.SetProgress(e.ProgressPercentage - 200);
+                progressUI.SetItemName(lastWorkingItem.Name);
+                if (directoryUI.ContainsKey(lastWorkingItem.FullName))
+                {
+                    directoryUI[lastWorkingItem.FullName].Enabled = true;
+                }
+            }
+        }
+
+        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            var datain = (MagicBGWData)(e.Result);
+            if (datain.CulpritList == null)
+                MessageBox.Show("Investigation resulted in 0 folders.", "No Result",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            var result = datain.CulpritList;
+            var drawAtEnd = datain.DrawAtEnd;
+            progressUI.SetOperationName("Done...");
+            progressUI.SetItemName("......");
+            if (drawAtEnd)
+            {
+                flowLayoutPanel1.SuspendLayout();
+                ClearMaps();
+                flowLayoutPanel1.Controls.Clear();
+                DrawControlBar(lastWorkingParentDirectory);
+                DrawFolders(result, true);
+                flowLayoutPanel1.ResumeLayout();
+            }
+        }
         private DirectoryItemUI MakeDirectoryItemUi(DirectoryInfo dir, string size, bool parent)
         {
             var uiComponent = new DirectoryItemUI(dir, size, true);
@@ -607,7 +748,7 @@ namespace FindLargestFolders
         private void ControlUi_BackClickEvent(DirectoryInfo dir)
         {
             flowLayoutPanel1.Controls.Clear();
-            if (dir.Parent != null)
+            if (dir!= null && dir.Parent != null)
                 DrawControlBar(dir);
             DrawParentFolders(dir.FullName, true);
         }
@@ -615,7 +756,7 @@ namespace FindLargestFolders
         private void ControlUi_ParentClickEvent(DirectoryInfo dir)
         {
             flowLayoutPanel1.Controls.Clear();
-            if (dir.Parent != null)
+            if (dir != null && dir.Parent != null)
                 DrawControlBar(dir);
             DrawParentFolders(dir.FullName, true);
         }
@@ -707,5 +848,6 @@ namespace FindLargestFolders
             }
             e.Effect = effects;
         }
+
     }
 }
